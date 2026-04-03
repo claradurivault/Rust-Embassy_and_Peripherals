@@ -5,6 +5,8 @@ use defmt::info;
 use embassy_executor::Spawner;
 use embassy_stm32::gpio::{Level, Output, Speed, AnyPin};
 use embassy_stm32::Peri;
+use embassy_time::Timer;
+use embedded_hal::digital::v2::OutputPin;
 use {defmt_rtt as _, panic_probe as _};
 
 pub struct Bargraph<const N: usize> {
@@ -18,18 +20,30 @@ impl<const N: usize> Bargraph<N> {
     }
 
     pub fn all_high(&mut self) {
-        #[panic_handler]
         for led in &mut self.leds {
             led.set_high();
         }
     }
 
     pub fn all_low(&mut self) {
-        #[panic_handler]
         for led in &mut self.leds {
             led.set_low();
         }
     }
+    pub fn set_range(&mut self, start : usize, end: usize) {
+        for i in 0..N {
+            if i >= start && i < end {
+                self.leds[i].set_high();
+            } else {
+                self.leds[i].set_low();
+            }
+        }
+    }
+
+    pub fn set_value(&mut self, value: usize) {
+        self.set_range(0, value);
+    }
+
 }
 
 
@@ -48,5 +62,14 @@ async fn main(_spawner: Spawner) {
         p.PB5.into()];
     let mut bargraph_pins = Bargraph::<8>::new(tab);
 
-    bargraph_pins.all_high();
+    loop {
+        // chenillard
+        for i in 0..8 {
+            bargraph_pins.set_value(i);
+            Timer::after_millis(1_000).await;
+        }
+        Timer::after_millis(1_000).await;
+        bargraph_pins.all_low();
+        Timer::after_millis(1_000).await;
+    }
 }

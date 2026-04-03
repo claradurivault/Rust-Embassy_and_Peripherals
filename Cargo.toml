@@ -21,6 +21,12 @@ path = "src/bin/bargraph.rs"
 test = false
 bench = false
 
+[[bin]]
+name = "gamepad"
+path = "src/bin/gamepad.rs"
+test = false
+bench = false
+
 
 [dependencies]
 cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }

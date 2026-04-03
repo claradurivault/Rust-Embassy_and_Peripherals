@@ -5,6 +5,7 @@ use embassy_stm32::gpio::AnyPin;
 use embassy_stm32::{Peri, Peripherals};
 pub struct Board {
     pub bargraph_pins: Bargraph_Pins,
+    pub gamepad_pins: Gamepad_Pins,
 }
 
 impl Board {
