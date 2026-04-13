@@ -1,32 +1,7 @@
 [package]
-name = "TD3_"
+name = "tp3"
 version = "0.1.0"
 edition = "2024"
-
-[[bin]]
-name = "blink"
-path = "src/bin/blink.rs"
-test = false
-bench = false
-
-[[bin]]
-name = "bspEnsea"
-path = "src/bin/bspEnsea.rs"
-test = false
-bench = false
-
-[[bin]]
-name = "bargraph"
-path = "src/bin/bargraph.rs"
-test = false
-bench = false
-
-[[bin]]
-name = "gamepad"
-path = "src/bin/gamepad.rs"
-test = false
-bench = false
-
 
 [dependencies]
 cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
@@ -54,8 +29,6 @@ defmt-rtt = "1.1.0"
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
 embedded-hal = "0.2.7"
 
-
 [lints.clippy]
 pedantic = "deny"
 arithmetic_side_effects = "deny"
-
